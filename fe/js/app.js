@@ -8,16 +8,16 @@
 	var Todo = {
 
 		init: function () {
-			this.getAllList();
-			this.bindEvent();
+			Todo.getAllList();
+			Todo.bindEvents();
 		},
-		bindEvent: function () {
-			$('.todoapp input.new-todo').on('keyup', this.addTodo);
-			$('#todo-list').on('change', '.toggle', this.toggle)
-				.on('click', '.destroy', this.removeTodo);
+		bindEvents: function () {
+			$('.todoapp input.new-todo').on('keyup', Todo.addTodo);
+			$('.todo-list').on('change', '.toggle', Todo.toggle)
+						   .on('click', '.destroy', Todo.removeTodo);
 
-			$('footer ul.filters li a').on('click', this.setFilters);
-			$('footer button.clear-completed').on('click', this.removeCompletedlist);
+			$('footer ul.filters li a').on('click', Todo.setFilters);
+			$('footer button.clear-completed').on('click', Todo.removeCompletedlist);
 		},
 		getTodoTemplete: function (t) {
 			return (t.completed
@@ -32,15 +32,10 @@
 				+ '</li>';
 		},
 		getAllList: function () {
-			var result = this.todoApi('GET', 'api/todos');
+			var result = Todo.todoApi('GET', 'api/todos');
 			result.done(function (res) {
 				todos = res;
-				res.map(function (t) {
-					var html = Todo.getTodoTemplete(t);
-					$('ul.todo-list').prepend(html);
-				});
-
-				Todo.updateActiveTodoListCount();
+				Todo.rendering();
 			})
 		},
 		toggle: function (event) {
@@ -106,11 +101,8 @@
 
 			var $element = $(this);
 			var currentFilter = $element.attr('href').split('/')[1];
-			console.log(currentFilter);
 
-			// Remove all
 			$('.selected').removeClass('selected');
-			// Add to current filters
 			$element.addClass('selected');
 
 			if (currentFilter === 'active') filters = 'Active';
@@ -163,16 +155,16 @@
 		},
 		rendering: function (event) {
 			var filteredTodo = Todo.getFilteredTodoList();
-			
+			var $todoList = $('.todo-list');
 			// clear all list 
-			$('ul.todo-list').html('');
+			$todoList.html('');
 
 			Todo.updateActiveTodoListCount();
 
 			// rendering
 			filteredTodo.map(function (t) {
 				var html = Todo.getTodoTemplete(t);
-				$('ul.todo-list').prepend(html);
+				$todoList.prepend(html);
 			});
 
 			$(".new-todo").focus();
