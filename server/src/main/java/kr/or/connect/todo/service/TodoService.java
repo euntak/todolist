@@ -1,7 +1,5 @@
 package kr.or.connect.todo.service;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +17,6 @@ public class TodoService {
 	public List<Todo> getAllTodoList() {
 		return dao.selectAllTodoList();
 	}
-	
-	public List<Todo> getActiveTodoList() {
-		return dao.selectActiveTodoList();
-	}
-	
-	public List<Todo> getCompletedTodoList() {
-		return dao.selectCompletedTodoList();
-	}
-	
-	public int getUncompletedCount() {
-		return dao.unCompletedCount();
-	}
 
 	public int addTodo(Todo todo) {
 		return dao.addTodo(todo);
@@ -38,6 +24,10 @@ public class TodoService {
 	
 	public int updateTodo(Todo todo) {
 		return dao.updateTodo(todo);
+	}
+	
+	public int deleteTodo(String id) {
+		return dao.deleteTodo(id);
 	}
 	
 	public int deleteCompletedTodoList() {

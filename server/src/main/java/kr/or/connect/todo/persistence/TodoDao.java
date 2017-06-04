@@ -43,21 +43,6 @@ public class TodoDao {
 		return jdbc.query(TodoSqls.SELECT_ALL_LIST, params, rowMapper);
 	}
 	
-	public List<Todo> selectActiveTodoList() {
-		Map<String, Object> params = Collections.emptyMap();
-		return jdbc.query(TodoSqls.SELECT_ACTIVE_LIST, params, rowMapper);
-	}
-	
-	public List<Todo> selectCompletedTodoList() {
-		Map<String, Object> params = Collections.emptyMap();
-		return jdbc.query(TodoSqls.SELECT_COMPLETED_LIST, params, rowMapper);
-	}
-	
-	public int unCompletedCount() {
-		Map<String, Object> params = Collections.emptyMap();
-		return jdbc.queryForObject(TodoSqls.UNCOMPLETED_COUNT, params, Integer.class);
-	}
-	
 	public int addTodo(Todo todo) {
 		System.out.println(todo);
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -72,6 +57,12 @@ public class TodoDao {
 		params.put("id", todo.getId());
 		params.put("completed", todo.getCompleted());
 		return jdbc.update(TodoSqls.UPDATE_STATUS_BY_ID, params);
+	}
+	
+	public int deleteTodo(String id) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		return jdbc.update(TodoSqls.DELETE_TODO_BY_ID, params);
 	}
 	
 	public int deleteCompletedTodoList() {
