@@ -9,6 +9,8 @@ public class TodoSqls {
 	// select
 	static final String SELECT_ALL_LIST =
 			"SELECT * FROM todo";
+	static final String SELECT_BY_ID = 
+			"SELECT * FROM todo WHERE id = :id";
 	
 	// delete
 	static final String DELETE_COMPLETED_LIST = 

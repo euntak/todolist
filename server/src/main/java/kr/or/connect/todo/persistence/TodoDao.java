@@ -43,8 +43,13 @@ public class TodoDao {
 		return jdbc.query(TodoSqls.SELECT_ALL_LIST, params, rowMapper);
 	}
 	
+	public Todo selectTodoById(int id) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		return jdbc.query(TodoSqls.SELECT_BY_ID, params, rowMapper).get(0);
+	}
+	
 	public int addTodo(Todo todo) {
-		System.out.println(todo);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("todo", todo.getTodo());
 		params.put("date", new Timestamp(System.currentTimeMillis()));
